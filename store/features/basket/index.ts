@@ -23,7 +23,14 @@ export const basketApi = createApi({
       }),
       invalidatesTags: ["Basket"],
     }),
+    clearBasket: builder.mutation<Basket, void>({
+      query: () => ({
+        url: `basket`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Basket"],
+    }),
   }),
 });
 
-export const { useGetBasketQuery, useAddToBasketMutation } = basketApi;
+export const { useGetBasketQuery, useAddToBasketMutation, useClearBasketMutation } = basketApi;

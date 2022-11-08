@@ -1,10 +1,10 @@
-import { AnyAction, Dispatch, Store } from '@reduxjs/toolkit';
 import Head from 'next/head'
+import { AppData } from '../components/AppData';
 import { Basket } from '../components/Basket';
 import { Categories } from '../components/Categories'
 import { Products } from '../components/Products'
 import { wrapper } from '../store';
-import { basketApi, categoryApi, productApi } from '../store/features';
+import { categoryApi, productApi } from '../store/features';
 import styles from '../styles/Home.module.css'
 
 export const getServerSideProps = wrapper.getServerSideProps((store) => async () => {
@@ -21,6 +21,8 @@ export const getServerSideProps = wrapper.getServerSideProps((store) => async ()
 })
 
 export default function Home() {
+  console.log("rendered index");
+
   return (
     <div className={styles.container}>
       <Head>
@@ -33,8 +35,11 @@ export default function Home() {
         <h1 className={styles.title}>
           Welcome to the next.js Redux Toolkit Test Page
         </h1>
-
-        <Basket />
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", width: "100%", justifyContent: "center" }}>
+          <Basket />
+          <AppData />
+        </div>
+        <Categories />
         <Products />
       </main>
     </div>

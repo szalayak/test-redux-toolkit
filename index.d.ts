@@ -29,3 +29,8 @@ type Basket = {
   items: BasketItem[];
   total: number;
 };
+
+type App = {
+  counter: number;
+  clicks: string[]
+}

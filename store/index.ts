@@ -1,18 +1,29 @@
-import { Action, configureStore, Store, ThunkAction } from "@reduxjs/toolkit";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import { Action, configureStore, ThunkAction } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
-import { productApi, categoryApi, basketApi, rootReducer, RootState } from "./features";
-import { Context, createWrapper } from "next-redux-wrapper";
+import {
+  productApi,
+  categoryApi,
+  basketApi
+} from "./features";
+import { createWrapper } from "next-redux-wrapper";
+import app, { appSlice } from "./features/app";
 
-const setupStore = () => {
+// create a makeStore function
+const makeStore = () => {
   const store = configureStore({
-    reducer: rootReducer,
+    reducer: {
+      [appSlice.name]: appSlice.reducer,
+      [productApi.reducerPath]: productApi.reducer,
+      [categoryApi.reducerPath]: categoryApi.reducer,
+      [basketApi.reducerPath]: basketApi.reducer,
+    },
     middleware: getDefaultMiddleware =>
       getDefaultMiddleware().concat(
         productApi.middleware,
         categoryApi.middleware,
         basketApi.middleware
       ),
+    devTools: true
   });
 
   setupListeners(store.dispatch);
@@ -20,12 +31,16 @@ const setupStore = () => {
   return store;
 };
 
-// create a makeStore function
-const makeStore = (context: Context) => setupStore()
-
 export type AppStore = ReturnType<typeof makeStore>;
-export type AppState = ReturnType<AppStore['getState']>;
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, AppState, unknown, Action>;
+export type AppState = ReturnType<AppStore["getState"]>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  AppState,
+  unknown,
+  Action
+>;
 
 // export an assembled wrapper
 export const wrapper = createWrapper<AppStore>(makeStore, { debug: true });
+
+export * from "./features";

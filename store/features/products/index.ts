@@ -6,7 +6,7 @@ export const productApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://northwind.vercel.app/api/" }),
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === HYDRATE) {
-      return action.payload[reducerPath]
+      return action.payload[reducerPath];
     }
   },
   endpoints: builder => ({

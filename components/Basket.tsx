@@ -1,21 +1,26 @@
-import { useGetBasketQuery } from '../store/features/basket';
+import { useClearBasketMutation, useGetBasketQuery } from '../store/features';
 import styles from '../styles/Home.module.css'
 
 export const Basket = () => {
 
     const { data: basket, error, isLoading } = useGetBasketQuery();
 
+    const [clearBasket] = useClearBasketMutation();
+
     if (error) return <>{error}</>;
 
     if (isLoading) {
+        console.log("loading basket");
         return <div className={styles.card}>
             <h2>Loading</h2>
         </div>
     }
 
+    console.log("rendered basket");
+
     return <div className={styles.card}>
         <h1>Basket - total: {basket?.total}</h1>
-        <table>
+        <table style={{ paddingTop: "24px", paddingBottom: "24px" }}>
             <thead>
                 <tr>
                     <th>Product ID</th>
@@ -35,6 +40,9 @@ export const Basket = () => {
                 })}
             </tbody>
         </table>
+        <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
+            <button onClick={() => clearBasket()}>Clear basket</button>
+        </div>
     </div>
 
 }

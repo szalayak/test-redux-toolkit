@@ -13,17 +13,10 @@ export const categoryApi = createApi({
     getCategories: builder.query<Category[], void>({
       query: () => "categories",
     }),
-    getCategoryById: builder.query<Category, number>({
+    getCategoryById: builder.query<Category, string>({
       query: id => `categories/${id}`,
-    }),
-    createCategory: builder.mutation<Category, Partial<Category>>({
-      query: ({ id, ...data }) => ({
-        url: `categories`,
-        method: `POST`,
-        body: data,
-      }),
-    }),
+    })
   }),
 });
 
-export const { useGetCategoriesQuery, useGetCategoryByIdQuery, useCreateCategoryMutation } = categoryApi;
+export const { useGetCategoriesQuery, useGetCategoryByIdQuery } = categoryApi;
