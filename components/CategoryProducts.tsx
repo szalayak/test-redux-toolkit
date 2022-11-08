@@ -1,6 +1,6 @@
 import { useStore } from "react-redux";
 import { useAddToBasketMutation, AppStore, addClick } from "../store";
-import styles from "../styles/Home.module.css";
+import { Card } from "./Card";
 
 export const CategoryProducts = ({ products, category }: { category: Category, products: Product[] }) => {
 
@@ -20,10 +20,9 @@ export const CategoryProducts = ({ products, category }: { category: Category, p
         })
     }
 
-    return <div key={category.id} className={styles.card}>
-        <h2>{category.name}</h2>
+    return <Card title={category.name}>
         <ul>
-            {products?.filter(({ categoryId }) => categoryId === category.id).map(product => <li onClick={() => handleAddToBasket(product)} key={product.id}>{product.name}</li>)}
+            {products?.filter(({ categoryId }) => categoryId === category.id).map(product => <li className="hover:text-emerald-700 hover:cursor-pointer" onClick={() => handleAddToBasket(product)} key={product.id}>{product.name}</li>)}
         </ul>
-    </div>
+    </Card>
 }

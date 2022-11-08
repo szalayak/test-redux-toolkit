@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useGetCategoriesQuery } from '../store/features/categories'
 import styles from "../styles/Home.module.css";
+import { Button } from './Button';
 
 export const Categories = () => {
 
@@ -10,17 +11,12 @@ export const Categories = () => {
 
     if (isLoading) {
         console.log("loading categories");
-        return <div className={styles.card}>
-            <h2>Loading</h2>
-        </div>
+        return <div>Loading...</div>
     }
 
     console.log("rendered categories");
-    return <div className={styles.card}>
-        <h2>Categories</h2>
-        <ul>
-            {categories?.map(category => <li key={category.id}><Link href={`categories/${category.id}`}>{category.name}</Link></li>)}
-        </ul>
+    return <div className='flex gap-4 flex-wrap w-full pt-6'>
+        {categories?.map(category => <Button key={category.id} rounded><Link href={`categories/${category.id}`}>{category.name}</Link></Button>)}
     </div>
 
 }

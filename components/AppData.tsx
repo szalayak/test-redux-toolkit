@@ -1,7 +1,10 @@
 import { useStore } from "react-redux";
 import { useSelector } from "react-redux";
 import { AppState, AppStore, decrement, increment, reset } from "../store";
-import styles from "../styles/Home.module.css";
+import { Button } from "./Button";
+import { ButtonContainer } from "./ButtonContainer";
+import { Card } from "./Card";
+import { Table } from "./Table";
 
 
 export const AppData = () => {
@@ -15,19 +18,19 @@ export const AppData = () => {
 
     console.log("app data rendered");
 
-    return <div className={styles.card}>
-        <h1>App State</h1>
-        <button onClick={handleReset}>Clear app state</button>
-        <p>Counter: {counter}</p>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", width: "100%", justifyContent: "space-evenly" }}>
-            <button onClick={handleIncrement} style={{ margin: "0px 24px", padding: "24px 0px" }}>Increase Counter</button>
-            <button onClick={handleDecrement} style={{ margin: "0px 24px", padding: "24px 0px" }}>Decrease Counter</button>
+    return <Card full title="App State">
+        <Button onClick={handleReset}>Clear app state</Button>
+        <div className="my-6 py-6">
+            <p className="font-bold text-md pb-2">Counter: {counter}</p>
+            <ButtonContainer>
+                <Button variant="positive" onClick={handleIncrement}>Increase Counter</Button>
+                <Button variant="negative" onClick={handleDecrement}>Decrease Counter</Button>
+            </ButtonContainer>
         </div>
-        <h2>Clicked items</h2>
-        <table>
+        <Table title="Clicked Items">
             <tbody>
                 {clicks.map((click, index) => <tr key={index}><td>{click}</td></tr>)}
             </tbody>
-        </table>
-    </div>
+        </Table>
+    </Card>
 }

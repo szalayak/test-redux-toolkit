@@ -1,10 +1,5 @@
-
-import { MouseEventHandler } from 'react';
-import { useStore } from 'react-redux';
-import { AppStore } from '../store';
-import { addClick, useAddToBasketMutation, useGetCategoriesQuery } from '../store/features';
+import {  useGetCategoriesQuery } from '../store/features';
 import { useGetProductsQuery } from '../store/features'
-import styles from '../styles/Home.module.css'
 import { CategoryProducts } from './CategoryProducts';
 
 export const Products = () => {
@@ -14,7 +9,7 @@ export const Products = () => {
 
     console.log("rendered products");
 
-    return <div className={styles.grid}>
+    return <div className="flex flex-wrap gap-4 justify-between pt-6">
         {categories?.map(category => {
 
             const categoryProducts = products?.filter(({categoryId}) => categoryId === category.id);

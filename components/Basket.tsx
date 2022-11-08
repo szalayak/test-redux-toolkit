@@ -1,5 +1,7 @@
 import { useClearBasketMutation, useGetBasketQuery } from '../store/features';
-import styles from '../styles/Home.module.css'
+import { Button } from './Button';
+import { Card } from './Card';
+import { Table } from './Table';
 
 export const Basket = () => {
 
@@ -11,38 +13,36 @@ export const Basket = () => {
 
     if (isLoading) {
         console.log("loading basket");
-        return <div className={styles.card}>
-            <h2>Loading</h2>
-        </div>
+        return <Card title='Loading' />
     }
 
     console.log("rendered basket");
 
-    return <div className={styles.card}>
-        <h1>Basket - total: {basket?.total}</h1>
-        <table style={{ paddingTop: "24px", paddingBottom: "24px" }}>
+    return <Card full title={`Basket - total: ${basket?.total}`}>
+
+        <Table>
             <thead>
                 <tr>
-                    <th>Product ID</th>
-                    <th>Product name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
+                    <th className='border-r'>Product ID</th>
+                    <th className='border-x'>Product name</th>
+                    <th className='border-x'>Quantity</th>
+                    <th className='border-l'>Price</th>
                 </tr>
             </thead>
             <tbody>
                 {basket?.items.map(item => {
                     return <tr key={item.id}>
-                        <td>{item.id}</td>
-                        <td>{item.name}</td>
-                        <td>{item.quantity.toString()}</td>
-                        <td>{item.price.toLocaleString()}</td>
+                        <td className='border'>{item.id}</td>
+                        <td className='border'>{item.name}</td>
+                        <td className='border'>{item.quantity.toString()}</td>
+                        <td className='border'>{item.price.toLocaleString()}</td>
                     </tr>
                 })}
             </tbody>
-        </table>
-        <div style={{ display: "flex", width: "100%", justifyContent: "center" }}>
-            <button onClick={() => clearBasket()}>Clear basket</button>
+        </Table>
+        <div className='w-full flex justify-center'>
+            <Button variant='negative' full onClick={() => clearBasket()}>Clear basket</Button>
         </div>
-    </div>
+    </Card>
 
 }
